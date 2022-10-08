@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { KeyboardEvent, useEffect, useState } from 'react';
 import { RatingProps } from './Rating.props';
 import styles from './Rating.module.css';
 import StarIcon from './star.svg';
@@ -9,16 +9,45 @@ export function Rating({ isEditable = false, rating, setRating, ...props }: Rati
 
 	const constructRating = (currentRating: number): void => {
 		const updatedArray = ratingArray.map(
-			(rating: JSX.Element, index: number): JSX.Element => (
-				<StarIcon className={
+			(ratingElement: JSX.Element, index: number): JSX.Element => (
+				<span className={
 					classNames(
 						styles.star, {
-						[styles.filled]: index < currentRating
-					})
-				} />
+						[styles.filled]: index < currentRating,
+						[styles.editable]: isEditable
+					})}
+					onMouseEnter={(): void => changeDisplay(index + 1)}
+					onMouseLeave={(): void => changeDisplay(rating)}
+					onClick={(): void => onClick(index + 1)}
+				>
+					<StarIcon
+						tabIndex={isEditable ? 0 : -1}
+						onKeyDown={(event: KeyboardEvent<SVGElement>): unknown => isEditable && handleSpace(index + 1, event)}
+					/>
+				</span>
 			)
 		);
 		setRatingArray(updatedArray);
+	};
+
+	const changeDisplay = (index: number): void => {
+		if (!isEditable) return;
+
+		constructRating(index);
+	};
+
+	const onClick = (index: number): void => {
+		if (!isEditable || !setRating) return;
+
+		setRating(index);
+	};
+
+	const handleSpace = (index: number, event: KeyboardEvent<SVGElement>): void => {
+		if (event.code != 'Space' || !setRating) {
+			return;
+		}
+
+		setRating(index);
 	};
 
 	useEffect((): void => {
@@ -28,8 +57,8 @@ export function Rating({ isEditable = false, rating, setRating, ...props }: Rati
 	return (
 		<div {...props}>
 			{ratingArray.map(
-				(rating: JSX.Element, index: number): JSX.Element => (
-					<span key={index}>{rating}</span>
+				(ratingElement: JSX.Element, index: number): JSX.Element => (
+					<span key={index}>{ratingElement}</span>
 				)
 			)}
 		</div>

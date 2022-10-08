@@ -5,25 +5,12 @@ import Htag from '../components/Htag/Htag';
 
 
 export default function Home(): JSX.Element {
-	const [counter, setCounter] = useState<number>(0);
-
-	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-	useEffect(() => {
-		console.log('Counter: ' + counter);
-
-		return function cleanup(): void {
-			console.log('Unmount');
-		};
-	});
-
-	useEffect((): void => {
-		console.log('Mounted');
-	}, []);
+	const [rating, setRating] = useState<number>(4);
 
 	return (
 		<div>
-			<Htag tag='h1'>{counter}</Htag>
-			<Button appearance='primary' arrow='right' onClick={(): void => setCounter((x: number): number => x + 1)}>Primary</Button>
+			<Htag tag='h1'>HTag</Htag>
+			<Button appearance='primary' arrow='right'>Primary</Button>
 			<Button appearance='ghost' arrow='down'>Ghost</Button>
 			<P size='l'>Large</P>
 			<P>Medium</P>
@@ -34,7 +21,7 @@ export default function Home(): JSX.Element {
 			<Tag color='gray'>Gray Tag</Tag>
 			<Tag color='green'>Green Tag</Tag>
 			<Tag color='primary'>Primary Tag</Tag>
-			<Rating rating={4}></Rating>
+			<Rating rating={rating} isEditable setRating={setRating}></Rating>
 		</div>
 	);
 }

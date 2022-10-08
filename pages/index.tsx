@@ -7,7 +7,8 @@ import Htag from '../components/Htag/Htag';
 export default function Home(): JSX.Element {
 	const [counter, setCounter] = useState<number>(0);
 
-	useEffect((): void => {
+	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+	useEffect(() => {
 		console.log('Counter: ' + counter);
 
 		return function cleanup(): void {

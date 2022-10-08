@@ -1,8 +1,9 @@
 import { ButtonProps } from './Button.props';
 import styles from './Button.module.css';
 import classnames from 'classnames';
+import ArrowIcon from './arrow.svg';
 
-function Button({ appearance, children, className, ...props }: ButtonProps): JSX.Element {
+function Button({ appearance, children, arrow = 'none', className, ...props }: ButtonProps): JSX.Element {
 	return (
 		<button className={
 			classnames(
@@ -14,6 +15,13 @@ function Button({ appearance, children, className, ...props }: ButtonProps): JSX
 			{...props}
 		>
 			{children}
+			{arrow != 'none' && <span className={
+				classnames(
+					styles.arrow, styles[arrow]
+				)
+			}>
+				<ArrowIcon />
+			</span>}
 		</button>
 	);
 }

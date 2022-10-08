@@ -1,13 +1,28 @@
+import { useEffect, useState } from 'react';
 import { P, Tag } from '../components';
 import Button from '../components/Button/Button';
 import Htag from '../components/Htag/Htag';
 
 
 export default function Home(): JSX.Element {
+	const [counter, setCounter] = useState<number>(0);
+
+	useEffect((): void => {
+		console.log('Counter: ' + counter);
+
+		return function cleanup(): void {
+			console.log('Unmount');
+		};
+	});
+
+	useEffect((): void => {
+		console.log('Mounted');
+	}, []);
+
 	return (
 		<div>
-			<Htag tag='h1'>Text</Htag>
-			<Button appearance='primary' arrow='right'>Primary</Button>
+			<Htag tag='h1'>{counter}</Htag>
+			<Button appearance='primary' arrow='right' onClick={(): void => setCounter((x: number): number => x + 1)}>Primary</Button>
 			<Button appearance='ghost' arrow='down'>Ghost</Button>
 			<P size='l'>Large</P>
 			<P>Medium</P>

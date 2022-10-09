@@ -3,7 +3,7 @@ import styles from './Button.module.css';
 import classnames from 'classnames';
 import ArrowIcon from './arrow.svg';
 
-function Button({ appearance, children, arrow = 'none', className, ...props }: ButtonProps): JSX.Element {
+export function Button({ appearance, children, arrow = 'none', className, ...props }: ButtonProps): JSX.Element {
 	return (
 		<button className={
 			classnames(
@@ -25,5 +25,3 @@ function Button({ appearance, children, arrow = 'none', className, ...props }: B
 		</button>
 	);
 }
-
-export default Button;
